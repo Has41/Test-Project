@@ -111,10 +111,10 @@
 
       const data = await res.json();
 
-      if (data.success) {
+      if (res.ok) {
         // If login is successful, redirect to the homepage
         window.location.href = "./index.html";
-        console.log("Successful Login!");
+        console.log("Successful Login!", data.message);
       } else {
         // If login failed, show an error message
         alert("Login failed: " + data.message);
