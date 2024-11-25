@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <title>Manage Your Business</title>
+  </head>
+  <body>
+    <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md">
+      <!-- Logo or Brand Name -->
+      <div class="text-2xl font-bold text-gray-800 font-poppins">Your Logo</div>
+
+      <!-- Navigation Links in a Row -->
+      <ul class="flex items-center mx-10">
+        <li>
+          <a href="./index.html" class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Home</a>
+        </li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">About Us</li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Service</li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Contact Us</li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
+          <select class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium" onchange="navigateToPage(this.value)">
+            <option value="#" disabled selected>More Options</option>
+            <option value="./team.html">Teams Available</option>
+            <option value="./create-project.html">Project Dashboard</option>
+            <option value="./module.html">Modules</option>
+            <option value="./project.html">Projects</option>
+          </select>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="signin-container bg-customBg w-full h-screen flex">
+      <!-- Left Section -->
+      <div class="left-section flex-1 flex flex-col mt-28 px-16 ml-10 text-white">
+        <!-- Heading Section -->
+        <div class="signup-text">
+          <h1 class="text-5xl font-bold leading-tight font-poppins">Sign In To Make</h1>
+          <h1 class="text-5xl font-bold leading-tight font-poppins">Your Project Easy.</h1>
+          <p class="text-lg mt-4 font-poppins">Plan, Track, and Run Successful Projects Together.</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="signin-form mt-10 ml-20 h-64 bg-white flex justify-center rounded-2xl w-[350px]">
+          <div class="signin-bgColor flex justify-center flex-col space-x-3 rounded-2xl">
+            <form id="login-form" class="flex flex-col space-y-4 w-[300px]">
+              <input
+                id="email"
+                class="py-2 px-4 rounded-3xl font-poppins text-white bg-customBg text-center"
+                placeholder="Enter Email"
+                type="email"
+                required
+              />
+              <input
+                id="password"
+                class="py-2 px-4 rounded-3xl font-poppins text-white bg-customBg text-center"
+                placeholder="Enter Password"
+                type="password"
+                required
+              />
+              <button
+                type="submit"
+                class="bg-customBg text-white font-poppins text-base font-semibold py-2 px-4 rounded-3xl transition-all ease-in-out hover:bg-customHover mx-auto justify-center w-28"
+              >
+                Login
+              </button>
+              <p class="text-center text-customBg font-poppins text-sm mt-4">
+                Don't have an account? <a href="./signup.html" class="text-customHover cursor-pointer">Sign up!</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div
+        class="right-section items-center justify-center bg-cover bg-center h-[50%] w-full"
+        style="
+          background-image: url('./assets/Login.png');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height: 40vh;
+          width: 40%;
+          margin-top: 200px;
+          margin-right: 80px;
+        "
+      ></div>
+    </div>
+  </body>
+</html>
+
+<script>
+  // Async function for login
+  async function loginUser(email, password) {
+    const loginData = {
+      email: email,
+      password: password
+    };
+
+    try {
+      // Send POST request to the login API
+      const res = await fetch("https://your-api-endpoint.com/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginData)
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // If login is successful, redirect to the homepage
+        window.location.href = "./index.html";
+      } else {
+        // If login failed, show an error message
+        alert("Login failed: " + data.message);
+      }
+    } catch (error) {
+      // Handle any errors during the fetch
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  }
+
+  // Form submission event listener
+  document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Get the form data (email and password)
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // Call the async function to log in
+    loginUser(email, password);
+  });
+</script>

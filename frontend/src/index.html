@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <title>Manage Your Business</title>
+  </head>
+  <body class="bg-customBg text-white">
+    <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md">
+        <!-- Logo or Brand Name -->
+        <div class="text-2xl font-bold text-gray-800 font-poppins">
+          Your Logo
+        </div>
+    
+        <!-- Navigation Links in a Row -->
+        <ul class="flex items-center mx-10">
+          <li><a href="./index.html" class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Home</a></li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">About Us</li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Service</li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Contact Us</li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium"><select 
+            class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium"
+            onchange="navigateToPage(this.value)"
+          >
+            <option value="#" disabled selected>More Options</option>
+            <option value="./team.html">Teams Available</option>
+            <option value="./create-project.html">Project Dashboard</option>
+            <option value="./module.html">Modules</option>
+            <option value="./project.html">Projects</option>
+          </select></li>
+          <a href="./login.html" class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+           Login
+          </a>
+        </ul>
+    
+      </nav>
+    <main>
+      <section class="grid grid-cols-1 sm:grid-cols-2 items-center justify-center h-screen p-8 overflow-hidden">
+        <!-- Left Content -->
+        <div class="left-content text-left ml-[20%] flex flex-col gap-6">
+          <h1 class="font-poppins font-bold text-4xl">Home</h1>
+          <h2 class="font-poppins font-bold text-4xl tracking-wide">Manage Your Business</h2>
+          <p class="font-poppins text-lg leading-6 text-gray-400">
+            Plan, Track, And Run Successful Projects Together.
+          </p>
+          <a href="./signup.html" class="bg-white text-customBg py-2 px-4 w-32 rounded-lg font-poppins font-medium transition-colors duration-500 ease-in-out hover:bg-customHover hover:text-white">
+            Get Started
+          </a>
+          
+        </div>
+        <!-- Right Content -->
+        <div class="right-content flex justify-center items-center">
+          <img src="./assets//SideImage.png" alt="Illustration of project management" class="max-w-[135%] h-auto" />
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+<script>
+  function navigateToPage(value) {
+    if (value) {
+      window.location.href = value; // Redirect to the selected page
+    }
+  }
+</script>
