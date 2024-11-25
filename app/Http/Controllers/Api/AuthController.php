@@ -61,36 +61,38 @@ class AuthController extends Controller
         }
     }
     public function logout(Request $request)
-    {
-        try {
-            // Check if the user is authenticated
-            if ($request->user()) {
-                // Revoke the current access token
-                $request->user()->tokens->each(function ($token) {
-                    $token->delete();  // Delete all tokens
-                });
-    
-                return response()->json([
-                    'status' => true,
-                    'message' => 'User logged out successfully',
-                    'redirect_url' => url('/login'),
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'User is not authenticated',
-                ], 401);
-            }
-        } catch (\Exception $e) {
-            // Log the error for debugging
-            \Log::error('Logout error: ' . $e->getMessage());
-    
+{
+    try {
+        // Check if the user is authenticated
+        if ($request->user()) {
+            // Revoke the current access token
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();  // Delete all tokens
+                
+            });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'User logged out successfully',
+                'redirect_url' => url('/login'),
+            ]);
+        } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Failed to log out. Please try again.',
-            ], 500);
+                'message' => 'User is not authenticated',
+            ], 401);
         }
+    } catch (\Exception $e) {
+        // Log the error for debugging
+        \Log::error('Logout error: ' . $e->getMessage());
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Failed to log out. Please try again.',
+        ], 500);
     }
+}
+
     
     public function profile(Request $request)
     {

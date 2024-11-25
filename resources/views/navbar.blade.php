@@ -25,31 +25,28 @@
                 <option value="./project.html">Projects</option>
             </select>
         </li>
-        @if (Request::is('login'))
-            {{-- Do not show any button on the login page --}}
+        @if (Auth::check())
+            {{-- User is logged in, show logout button --}}
+            <a id="logout-button" href="#"
+                class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+                Logout
+            </a>
         @else
-            @auth
-                {{-- Show the logout button if the user is logged in --}}
-                <a id="logout-button" href="#"
-                    class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
-                    Logout
-                </a>
-
-                <meta name="csrf-token" content="{{ csrf_token() }}">
-                <!-- Other head content like CSS, scripts, etc. -->
-
-
-
-                {{-- Logout form (required for POST requests in Laravel) --}}
-
-            @else
-                {{-- Show the login button if the user is not logged in --}}
-                <a href="{{ route('login') }}"
-                    class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
-                    Login
-                </a>
-            @endauth
+            {{-- User is not logged in, show login button --}}
+            <a href="{{ route('login') }}"
+                class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+                Login
+            </a>
         @endif
+
+        <!-- @if(Auth::check())
+            <p style="color: green;">Authenticated User: {{ Auth::user()->username }}</p>
+        @else
+            <p style="color: green;">Not authenticated</p>
+        @endif  -->
+
+
+
 
 
 
@@ -57,12 +54,14 @@
 
 </nav>
 <script>
-    document.getElementById("logout-button").addEventListener("click", async function (event) {
+
+document.getElementById("logout-button").addEventListener("click", async function (event) {
     event.preventDefault(); // Prevent default behavior of link
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const accessToken = localStorage.getItem('accessToken'); // Correct key name for access token
-
+    const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token from localStorage
+    
+   
     if (!accessToken) {
         alert("No access token found. Please log in again.");
         return;
@@ -80,10 +79,13 @@
 
         const result = await res.json();
         if (result.status) {
-            // Remove the access token from localStorage
-            localStorage.removeItem('accessToken'); // Clear access token from localStorage
+           
+            // Clear the access token from localStorage after a successful logout
+           localStorage.removeItem('accessToken');
+            {{auth()->logout()}}
             // Redirect the user after logout
             window.location.href = result.redirect_url;
+           
         } else {
             alert("Logout failed: " + result.message);
         }
@@ -91,6 +93,8 @@
         console.error("Error during logout:", error);
         alert("An error occurred. Please try again.");
     }
+    
+    
 });
 
 </script>
