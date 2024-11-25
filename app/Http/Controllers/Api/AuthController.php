@@ -18,7 +18,7 @@ class AuthController extends Controller
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-          
+
         ]);
 
         if ($validator->fails()) {
@@ -62,16 +62,36 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'User logged out successfully',
-            'redirect_url' => url('/login') // Redirect URL for the frontend to handle
-        ], 200);
+        try {
+            // Check if the user is authenticated
+            if ($request->user()) {
+                // Revoke the current access token
+                $request->user()->tokens->each(function ($token) {
+                    $token->delete();  // Delete all tokens
+                });
+    
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User logged out successfully',
+                    'redirect_url' => url('/login'),
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User is not authenticated',
+                ], 401);
+            }
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Logout error: ' . $e->getMessage());
+    
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to log out. Please try again.',
+            ], 500);
+        }
     }
-
-
+    
     public function profile(Request $request)
     {
         $user = Auth::user();

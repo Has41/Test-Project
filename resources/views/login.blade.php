@@ -81,6 +81,9 @@
 
 
         if (data.status) {
+          localStorage.setItem("accessToken", data.token.plainTextToken);
+
+
           window.location.href = data.redirect_url;
         } else {
 

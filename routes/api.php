@@ -25,6 +25,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('profile', 'profile');
     Route::post('update', 'update');
-    Route::post('logout', 'logout');
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::post('destroy', 'destroy');
 });

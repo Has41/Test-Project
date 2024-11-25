@@ -8,6 +8,7 @@
     @include('style')
   </style>
   <title>Manage Your Business</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
