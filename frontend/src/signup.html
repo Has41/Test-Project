@@ -1,120 +1,155 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <title>Manage Your Business</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="./output.css" rel="stylesheet">
-  <title>Manage Your Business</title>
-  <!-- <style>
-    select {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zY3JlZW5zY3JpcHQtZ3JhcGhpY3MuZ2Uvc3ZnIj4KPHBhdGggZD0iTTEwLDEyTDAsM0wzLjk4OTcsM0wyLjAwMTksMEwyLjAwMTksMEwyLjAwMTksMEwzLjk4OTcsMEwzLjk4OTcsMEwzLjk4OTcsMEwiIHN0eWxlPSJmaWxsOm5vbmU7c3RyZWtlaW5nOm5vbmUiLz4KPC9zdmc+Cg==');
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 16px;
-    }
-  </style> -->
-</head>
+  <body>
+    <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md">
+      <!-- Logo or Brand Name -->
+      <div class="text-2xl font-bold text-gray-800 font-poppins">Your Logo</div>
 
-<body>
-  <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md">
-    <!-- Logo or Brand Name -->
-    <div class="text-2xl font-bold text-gray-800 font-poppins">
-      Your Logo
-    </div>
+      <!-- Navigation Links in a Row -->
+      <ul class="flex items-center mx-10">
+        <li>
+          <a href="./index.html" class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Home</a>
+        </li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">About Us</li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Service</li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Contact Us</li>
+        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
+          <select class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium" onchange="navigateToPage(this.value)">
+            <option value="#" disabled selected>More Options</option>
+            <option value="./team.html">Teams Available</option>
+            <option value="./create-project.html">Project Dashboard</option>
+            <option value="./module.html">Modules</option>
+            <option value="./project.html">Projects</option>
+          </select>
+        </li>
+        <a href="./login.html" class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium"> Login </a>
+      </ul>
+    </nav>
 
-    <!-- Navigation Links in a Row -->
-    <ul class="flex items-center mx-10">
-      <li><a href="./index.html" class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Home</a></li>
-      <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">About Us</li>
-      <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Service</li>
-      <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Contact Us</li>
-      <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
-        <select 
-        class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium"
-        onchange="navigateToPage(this.value)"
-      >
-        <option value="#" disabled selected>More Options</option>
-        <option value="./team.html">Teams Available</option>
-        <option value="./create-project.html">Project Dashboard</option>
-        <option value="./module.html">Modules</option>
-        <option value="./project.html">Projects</option>
-      </select>
-    </li>
-      <a href="./login.html" class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
-        Login
-      </a>
-    </ul>
+    <div class="signup-container bg-customBg w-full h-screen flex">
+      <!-- Left Section -->
+      <div class="left-section flex-1 flex flex-col mt-28 px-16 ml-10 text-white">
+        <!-- Heading Section -->
+        <div class="signup-text">
+          <h1 class="text-5xl leading-tight font-poppins font-bold">Project Management</h1>
+          <h1 class="text-5xl leading-tight font-poppins font-bold">Made Easy.</h1>
+          <p class="text-lg mt-4 font-poppins font-light">Plan, Track, and Run Successful Projects Together.</p>
+        </div>
 
-  </nav>
-
-  <div class="signup-container bg-customBg w-full h-screen flex">
-    <!-- Left Section -->
-    <div class="left-section flex-1 flex flex-col mt-28 px-16 ml-10  text-white">
-      <!-- Heading Section -->
-      <div class="signup-text">
-        <h1 class="text-5xl  leading-tight font-poppins font-bold">Project Management</h1>
-        <h1 class="text-5xl leading-tight font-poppins font-bold">Made Easy.</h1>
-        <p class="text-lg mt-4 font-poppins font-light">
-          Plan, Track, and Run Successful Projects Together.
-        </p>
-      </div>
-
-      <!-- Form Section -->
-      <div class="signup-form mt-10">
-        <h5 class="text-xl font-semibold mb-4 font-poppins">Sign Up.</h5>
-        <!-- Add a wrapper with a fixed width -->
-        <form class="flex flex-col space-y-4 w-[400px]">
-          <input class="py-2 px-4 rounded-3xl text-center font-poppins  text-customBg" placeholder="Enter Username" />
-          <input class="py-2 px-4 rounded-3xl text-center font-poppins  text-customBg" placeholder="Enter Email" />
-          <input class="py-2 px-4 rounded-3xl text-center font-poppins  text-customBg" placeholder="Enter Password"
-            type="password" />
-          <input class="py-2 px-4 rounded-3xl text-center font-poppins  text-customBg" placeholder="Confirm Password"
-            type="password" />
-            <!-- <label for="role" class="font-poppins font-semibold" >Select Role</label> -->
-            <select name="role" id="role" class="text-customBg py-2 px-4 rounded-3xl text-center font-poppins appearance-none">
+        <!-- Form Section -->
+        <div class="signup-form mt-10">
+          <h5 class="text-xl font-semibold mb-4 font-poppins">Sign Up.</h5>
+          <!-- Add a wrapper with a fixed width -->
+          <form id="signup-form" class="flex flex-col space-y-4 w-[400px]">
+            <input id="username" class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg" placeholder="Enter Username" required />
+            <input id="email" class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg" placeholder="Enter Email" type="email" required />
+            <input
+              id="password"
+              class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
+              placeholder="Enter Password"
+              type="password"
+              required
+            />
+            <input
+              id="confirm-password"
+              class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
+              placeholder="Confirm Password"
+              type="password"
+              required
+            />
+            <select id="role" class="text-customBg py-2 px-4 rounded-3xl text-center font-poppins appearance-none" required>
               <option value="">Select Role</option>
               <option value="User">User</option>
               <option value="Admin">Admin</option>
             </select>
-          <div class="agreement-text">
-            <p class="text-xs font-poppins font-light">I agree to the Atlassian customer agreement, Which incorpo-</p>
-            <p class="text-xs font-poppins font-light">rates byt reference the AI Product-SpecificTerms and acknowle-
-            </p>
-            <p class="text-xs font-poppins font-light">dge the privacy policy!</p>
-
-          </div>
-          <button
-            class="bg-white text-customBg font-poppins text-base font-semibold py-2 px-4 rounded-3xl transition-all ease-in-out hover:bg-gray-400 mx-auto justify-center w-28">
-            Sign Up
-          </button>
-        </form>
+            <div class="agreement-text">
+              <p class="text-xs font-poppins font-light">
+                I agree to the Atlassian customer agreement, which incorporates by reference the AI Product-Specific Terms and acknowledges the
+                privacy policy!
+              </p>
+            </div>
+            <button
+              type="submit"
+              class="bg-white text-customBg font-poppins text-base font-semibold py-2 px-4 rounded-3xl transition-all ease-in-out hover:bg-gray-400 mx-auto justify-center w-28"
+            >
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
 
+      <!-- Right Section -->
+      <div
+        class="right-section items-center justify-center bg-cover bg-center h-[50%] w-full"
+        style="
+          background-image: url('./assets/Signup.png');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height: 50vh;
+          width: 45%;
+          margin-top: 200px;
+          margin-right: 80px;
+        "
+      ></div>
     </div>
 
-    <!-- Right Section -->
-    <div class="right-section items-center justify-center bg-cover bg-center h-[50%] w-full" style="
-        background-image: url('./assets/Signup.png');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 50vh;
-        width: 45%;
-        margin-top: 200px;
-        margin-right: 80px;
-      "></div>
-  </div>
+    <script>
+      document.getElementById("signup-form").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
 
- 
+        // Collect form data
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+        const role = document.getElementById("role").value;
 
-</body>
+        // Validate password
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
 
+        // User object
+        const userData = {
+          username: username,
+          email: email,
+          password: password,
+          role: role
+        };
+
+        try {
+          const res = await fetch("https://your-api-endpoint.com/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+          });
+
+          const result = await res.json();
+
+          if (res.ok) {
+            // If registration is successful, redirect to login page
+            alert("Registration successful!");
+            window.location.href = "./login.html"; // Redirect to login page
+          } else {
+            // If registration fails, show the error message
+            alert("Error: " + result.message);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again later.");
+        }
+      });
+    </script>
+  </body>
 </html>
-<script>
-  function navigateToPage(value) {
-    if (value) {
-      window.location.href = value; // Redirect to the selected page
-    }
-  }
-</script>
