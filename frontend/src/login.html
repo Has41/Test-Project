@@ -95,8 +95,8 @@
   // Async function for login
   async function loginUser(email, password) {
     const loginData = {
-      email: email,
-      password: password
+      email,
+      password
     };
 
     try {
@@ -114,6 +114,7 @@
       if (data.success) {
         // If login is successful, redirect to the homepage
         window.location.href = "./index.html";
+        console.log("Successful Login!");
       } else {
         // If login failed, show an error message
         alert("Login failed: " + data.message);
