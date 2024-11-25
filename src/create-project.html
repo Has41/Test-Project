@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Project</title>
+    <link rel="stylesheet" href="create-project.css" />
+    <link href="./output.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md">
+        <!-- Logo or Brand Name -->
+        <div class="text-2xl font-bold text-gray-800 font-poppins">
+          Your Logo
+        </div>
+    
+        <!-- Navigation Links in a Row -->
+        <ul class="flex items-center mx-10">
+          <li><a href="./index.html" class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Home</a></li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">About Us</li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Service</li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Contact Us</li>
+          <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium"><select 
+            class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium"
+            onchange="navigateToPage(this.value)"
+          >
+            <option value="#" disabled selected>More Options</option>
+            <option value="./team.html">Teams Available</option>
+            <option value="./create-project.html">Project Dashboard</option>
+            <option value="./module.html">Modules</option>
+            <option value="./project.html">Projects</option>
+          </select></li>
+          <a href="./login.html" class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+           Login
+          </a>
+        </ul>
+    
+      </nav>
+    <main class="main-container">
+      <!-- Navbar -->
+      <header class="navbar">
+        <div class="navbar-left">
+          <!-- DP and Admin Details -->
+          <div class="admin-info">
+            <div class="dp">DP</div>
+            <h1 class="admin-name">Admin User</h1>
+          </div>
+          <div class="dashboard">
+            <h1 class="dashboard-btn">Dashboard</h1>
+          </div>
+        </div>
+        <!-- Language Selector -->
+        <div class="navbar-right">
+          <div class="language-selector">
+            <h2 class="language-title">Language</h2>
+            <p class="language-value">Eng</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Create Project Form -->
+      <section class="form-container">
+        <form class="create-project-form" action="">
+          <h1 class="form-title">Create Project</h1>
+          <input type="text" class="input-field" placeholder="Project Name" />
+          <input type="text" class="input-field" placeholder="Project Description" />
+          <input type="text" class="input-field" placeholder="Project Budget" />
+          <input type="text" class="input-field" placeholder="Project Deadline" />
+          <button class="create-btn" type="submit">Create</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
+<script>
+  function navigateToPage(value) {
+    if (value) {
+      window.location.href = value; // Redirect to the selected page
+    }
+  }
+</script>
