@@ -14,12 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        // If the user is already logged in, redirect to the index page
+        return redirect('/index');
+    }
+
+    // If not logged in, show the signup page
     return view('signup');
 })->name('signup');
 
 Route::get('/login', function () {
+    if (Auth::check()) {
+        // If the user is already logged in, redirect to the index page
+        return redirect('/index');
+    }
+
+    // If not logged in, show the login page
     return view('login');
 })->name('login');
+
 
 Route::get('/index', function () {
     return view('index');

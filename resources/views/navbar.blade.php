@@ -80,7 +80,7 @@
 
         const result = await res.json();
         if (result.status) {
-            alert(result.message);
+            // Remove the access token from localStorage
             localStorage.removeItem('accessToken'); // Clear access token from localStorage
             // Redirect the user after logout
             window.location.href = result.redirect_url;
