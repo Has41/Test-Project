@@ -38,7 +38,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User Register Successfully',
-            'redirect_url' => url('/index')
+            'redirect_url' => url('/login')
         ], 200);
     }
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
                 'message' => 'Login Successful',
                 'token' => $success['token'],
                 'username' => $success['username'],
-                'redirect_url' => url('/index') // Redirect URL for the frontend to handle
+                'redirect_url' => url('/') // Redirect URL for the frontend to handle
             ], 200);
             // return response()->json(['success' => $success], 200); 
         } else {

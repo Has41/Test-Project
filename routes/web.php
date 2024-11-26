@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/singnup', function () {
     if (Auth::check()) {
         // If the user is already logged in, redirect to the index page
-        return redirect('/index');
+        return redirect('/');
     }
 
     // If not logged in, show the signup page
@@ -34,7 +34,7 @@ Route::get('/login', function () {
 })->name('login');
 
 
-Route::get('/index', function () {
+Route::get('/', function () {
     return view('index');
 })->name('index');
 

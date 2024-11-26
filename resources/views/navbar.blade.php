@@ -6,7 +6,7 @@
 
     <!-- Navigation Links in a Row -->
     <ul class="flex items-center mx-10">
-        <li><a href="{{url('/index')}}"
+        <li><a href="{{url('/')}}"
                 class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Home</a>
         </li>
         <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">

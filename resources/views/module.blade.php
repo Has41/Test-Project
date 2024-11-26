@@ -59,7 +59,7 @@
               <p class="text-customHover font-poppins text-lg">23 November</p>
               <p class="text-customHover font-poppins text-lg">50%</p>
             </div>
-            <div class="w-1/2 space-y-3  " style="background: url('./assets/Login.png');
+            <div class="w-1/2 space-y-3  " style="background: url('images/Login.png');
                            background-repeat: no-repeat;
                            background-position: center;
                            background-size: cover;

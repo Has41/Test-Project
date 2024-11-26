@@ -83,7 +83,7 @@
       <div
         class="right-section items-center justify-center bg-cover bg-center h-[50%] w-full"
         style="
-          background-image: url('./assets/Signup.png');
+          background-image: url('images/Signup.png');
           background-position: center;
           background-repeat: no-repeat;
           background-size: cover;
