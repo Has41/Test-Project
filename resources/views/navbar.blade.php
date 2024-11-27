@@ -6,15 +6,15 @@
 
     <!-- Navigation Links in a Row -->
     <ul class="flex items-center mx-10">
-        <li><a href="{{url('/')}}"
+        <li><a href="{{url('/')}}" style="padding: 1rem;" 
                 class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">Home</a>
         </li>
-        <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">
-            About Us</li>
-        <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">
-            Service</li>
-        <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
-            Contact Us</li>
+        <li> <a href="{{url('/about')}}" style="padding: 5px;" class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">
+           About Us</a></li>
+        <li> <a href="{{url('/service')}}" style="padding: 5px;" class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">
+            Services</a></li>
+        <li> <a href="{{url('/contact')}}" style="padding: 5px;" class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium ">
+            Contact Us</a></li>
         <!-- @if (Auth::check()) -->
         @if (Request::is('login'))
             {{-- Hide buttons on the login page --}}
@@ -64,11 +64,11 @@
         @endif
 
 
-        <!-- @if(Auth::check())
+         <!-- @if(Auth::check())
             <p style="color: green;">Authenticated User: {{ Auth::user()->username }}</p>
         @else
             <p style="color: green;">Not authenticated</p>
-        @endif   -->
+        @endif    -->
 
 
 
@@ -78,6 +78,8 @@
     </ul>
 
 </nav>
+
+
 <script>
 
     document.getElementById("logout-button").addEventListener("click", async function (event) {
@@ -108,6 +110,7 @@
 
                 // Redirect the user after logout
                 window.location.href = result.redirect_url;
+                
             } else {
                 alert("Logout failed: " + result.message);
             }

@@ -47,6 +47,10 @@ Route::get('/module', function () {
     return view('module');
 })->name('module');
 
+// Route::get('/contact', function () {
+//     return view('contact');
+// })->name('contact');
+
 // Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');
 // web.php
 Route::group(['middleware' => ['role:admin']], function () {
