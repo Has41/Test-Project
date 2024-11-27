@@ -118,5 +118,18 @@
         </section>
       </div>
     </main>
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+      function navigateToPage(value) {
+        if (value) {
+          window.location.href = value; // Redirect to the selected page
+        }
+      }
+    </script>
   </body>
 </html>
