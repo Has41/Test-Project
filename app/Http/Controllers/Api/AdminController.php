@@ -86,7 +86,7 @@ class AdminController extends Controller
         // Validate the incoming request
         $request->validate([
             'member_id' => 'required|exists:projects,id',
-            'status' => 'required|in:pending,in-progress,completed,submitted',
+            'status' => 'required|in:pending,in-progress,completed,submitted,open',
         ]);
 
         // Find the project by ID

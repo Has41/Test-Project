@@ -170,9 +170,16 @@
       <span class="pending-days"></span>
       </div>
       </div>
+      @if ($member->status=='open')
+      <button
+      style="margin-left: 50px; background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
+      class="request-btn" data-member-id="{{ $member->id }}">Request</button>
+      </div>
+    
+      
+      
 
-      @if (Auth::user()->id == $member->assigned_to || Auth::user()->role == 'admin')
-
+      @elseif (Auth::user()->id == $member->assigned_to || Auth::user()->role == 'admin')
       
       <div style="display: flex;  align-items: center;">
       <select style="margin-left: 50px;" class="status" name="status" id="status-{{ $member->id }}">
@@ -180,6 +187,7 @@
       <option value="pending">Pending</option>
       <option value="in-progress">In-progress</option>
       <option value="completed">Completed</option>
+      <option value="open">Open</option>
       </select>
       <button
       style="margin-left: 50px; background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
@@ -198,6 +206,7 @@
       </div>
     @endforeach
     @endif
+    
     </section>
   </div>
 

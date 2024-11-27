@@ -25,9 +25,9 @@
     <select class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium"
         onchange="navigateToPage(this.value)">
         <option value="#" disabled selected>More Options</option>
-        <option value="/team">Teams Available</option>
+        <option value="/team">Projects</option>
         @if ( Auth::user()->role === 'admin')
-            <option value="/create">Project Dashboard</option>
+            <option value="/create">Create Project</option>
         @endif
         <option value="/module">Modules</option>
         <option value="/project">Projects</option>

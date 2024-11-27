@@ -255,7 +255,7 @@
 
         // Collect form data
         const formData = new FormData(this);
-        alert(formData.get('deadline'));
+       
         const data = {
             name: formData.get('name'),
             description: formData.get('description'),
@@ -278,8 +278,7 @@
 
             if (response.ok && result.status) {
                 alert('Project created successfully!');
-                alert(result.data)
-                alert(result.deadline)
+               
                 this.reset(); // Reset the form
             } else if (result.errors) {
                 // Handle validation errors
