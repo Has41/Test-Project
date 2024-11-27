@@ -18,6 +18,8 @@ class Project extends Model
         'description',
         'budget',
         'assigned_to',
+        'deadline',
+        'status',
     ];
 
 }

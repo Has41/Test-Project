@@ -39,12 +39,16 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/team', function () {
-    return view('team');
-})->name('team');
+Route::get('/team',[
+    AdminController::class, 'teams'] 
+)->name('team');
 
 Route::get('/module', function () {
     return view('module');
 })->name('module');
 
-Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');
+// Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');
+// web.php
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');
+});

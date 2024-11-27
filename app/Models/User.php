@@ -17,11 +17,16 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
     protected $fillable = [
         'username',
         'email',
         'password',
-        'role'
+        'role',
+        
     ];
 
     /**

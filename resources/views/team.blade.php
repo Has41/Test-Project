@@ -7,8 +7,7 @@
   <title>Team Available</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
-    @include('style')
-    /* Reset */
+    /* General Styles */
     body,
     h1,
     h2,
@@ -20,21 +19,19 @@
       box-sizing: border-box;
     }
 
-    /* General Styles */
     body {
       font-family: Arial, sans-serif;
       background-color: #121063;
       color: #ffffff;
-      display: flex;
-      justify-content: center;
       height: 100vh;
     }
 
     .container {
       width: 90%;
       max-width: 1200px;
-      margin-top: 3%;
-      overflow: hidden;
+      margin: auto;
+      height: 100%;
+      padding: 2rem 0;
     }
 
     /* Header */
@@ -66,12 +63,15 @@
     /* Cards Section */
     .cards {
       display: flex;
-      justify-content: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
       gap: 1.5rem;
     }
 
-    /* Card */
     .card {
+      flex: 1 1 calc(33.33% - 1rem);
+      max-width: calc(33.33% - 1rem);
+      box-sizing: border-box;
       background: #ffffff;
       color: #121063;
       border-radius: 1.5rem;
@@ -80,6 +80,11 @@
       width: 20rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-top: 4%;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
     }
 
     .card-avatar {
@@ -99,12 +104,6 @@
       font-size: 1.2rem;
       font-weight: bold;
       margin-bottom: 0.5rem;
-    }
-
-    .card-role {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 1rem;
     }
 
     .card-info {
@@ -132,10 +131,13 @@
       font-size: 1.2rem;
       color: #ffcd3c;
     }
+
+    @include('style')
   </style>
 </head>
 
 <body>
+  @include  ('navbar')
 
   <div class="container">
 
@@ -147,52 +149,124 @@
 
     <!-- Cards Section -->
     <section class="cards">
-      <!-- Card 1 -->
-      @foreach ($team as $teams )
-      
-      @endforeach
+      @if ($teams->isEmpty())
+      <p>No teams available.</p>
+    @else
+      @foreach ($teams as $member)
       <div class="card">
-        <div class="card-avatar">DP</div>
-        <h2 class="card-title"> {{ $teams->username }}</h2>
-        <div class="card-info">
-          <div class="info-item">
-            <span>Project Statuus</span>
-            <span>{{$teams->status}}</span>
-          </div>
-          <div class="info-item">
-            <span>Deadline</span>
-            <span>{{$teams->deadline}}</span>
-          </div>
-          <div class="info-item">
-            <span>Clients</span>
-            <span>-</span>
-          </div>
-          <div class="info-item">
-            <span>Impressions</span>
-            <span>-</span>
-          </div>
-        </div>
-        <p class="status">Available</p>
-        <div class="rating">
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>☆</span>
-        </div>
+      <div class="card-avatar">DP</div>
+      <h2 class="card-title">{{ $member->username }}</h2>
+      <div class="card-info">
+      <div class="info-item">
+      <b>Project Status</b>
+      <span>{{ $member->status }}</span>
       </div>
-      @endforeach
+      <div class="info-item">
+      <b>Deadline</b>
+      <span class="deadline">{{ $member->deadline }}</span>
+      </div>
+      <div class="info-item">
+      <b>Pending Days</b>
+      <span class="pending-days"></span>
+      </div>
+      </div>
+
+      @if (Auth::user()->id == $member->assigned_to || Auth::user()->role == 'admin')
 
       
+      <div style="display: flex;  align-items: center;">
+      <select style="margin-left: 50px;" class="status" name="status" id="status-{{ $member->id }}">
+      <option value="{{ $member->status }}" selected disabled>{{ $member->status }} </option>
+      <option value="pending">Pending</option>
+      <option value="in-progress">In-progress</option>
+      <option value="completed">Completed</option>
+      </select>
+      <button
+      style="margin-left: 50px; background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
+      class="update-btn" data-member-id="{{ $member->id }}">Update</button>
+      </div>
+    @else
+      <p class="status">{{ $member->status }}</p>
+    @endif
+      <div class="rating">
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>☆</span>
+      </div>
+      </div>
+    @endforeach
+    @endif
     </section>
   </div>
-</body>
 
-</html>
-<script>
-  function navigateToPage(value) {
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log("Script is running...");
+
+      // Loop through each .card and calculate pending days
+      document.querySelectorAll('.card').forEach(card => {
+        const deadlineElement = card.querySelector('.deadline');
+        const pendingDaysElement = card.querySelector('.pending-days');
+
+        if (deadlineElement && pendingDaysElement) {
+          const deadline = new Date(deadlineElement.textContent.trim());
+          const today = new Date();
+
+          if (!isNaN(deadline.getTime())) {
+            const diffTime = deadline - today;
+            const pendingDays = diffTime > 0 ? Math.ceil(diffTime / (1000 * 60 * 60 * 24)) : 0;
+            const pendingText = pendingDays > 0 ? `${pendingDays} days remaining` : `Deadline passed`;
+
+            pendingDaysElement.textContent = pendingText;
+            console.log(`Updated pending-days: ${pendingText}`);
+          } else {
+            console.error(`Invalid date format in deadline: "${deadlineElement.textContent}"`);
+          }
+        } else {
+          console.error(".deadline or .pending-days element not found within .card.");
+        }
+      });
+    });
+    // Add event listener to all update buttons
+    document.querySelectorAll('.update-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        // Get the member ID
+        const memberId = this.getAttribute('data-member-id');
+        // Get the selected status
+        const status = document.querySelector(`#status-${memberId}`).value;
+
+        // Make the API call to update the status
+        fetch('http://127.0.0.1:8000/api/update-status', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          },
+          body: JSON.stringify({
+            member_id: memberId,
+            status: status,
+          }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status) {
+              alert('Status updated successfully');
+            } else {
+              alert('Failed to update status');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the status');
+          });
+      });
+    });
     if (value) {
       window.location.href = value; // Redirect to the selected page
     }
-  }
-</script>
+  </script>
+</body>
+
+</html>

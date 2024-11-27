@@ -159,6 +159,17 @@
             border: 2px solid #0b0b45;
         }
 
+        input[type="date"] {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+
         @include('style')
     </style>
 </head>
@@ -194,17 +205,31 @@
             <form id="create-project-form" class="create-project-form">
                 @csrf
                 <h1 class="form-title">Create Project</h1>
+
+                <!-- Project Name -->
                 <input type="text" name="name" class="input-field" placeholder="Project Name" required />
+
+                <!-- Project Description -->
                 <input type="text" name="description" class="input-field" placeholder="Project Description" required />
+
+                <!-- Project Budget -->
                 <input type="text" name="budget" class="input-field" placeholder="Project Budget" required />
+
+                <!-- Team Selection -->
                 <select name="assigned_to" class="input-field" required>
                     <option value="" disabled selected>Select a Team</option>
                     @foreach ($teams as $team)
                         <option value="{{ $team->id }}">{{ $team->username }}</option>
                     @endforeach
                 </select>
+
+                <!-- Deadline Field -->
+                <input type="date" name="deadline" class="input-field" placeholder="Project Deadline" required />
+
+                <!-- Submit Button -->
                 <button class="create-btn" type="submit">Create</button>
             </form>
+
 
         </section>
 
@@ -223,45 +248,49 @@
         }
     }
     document.getElementById('create-project-form').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); // Prevent default form submission
 
-    // Get CSRF token
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    // Collect form data
-    const formData = new FormData(this);
-    const data = {
-        name: formData.get('name'),
-        description: formData.get('description'),
-        budget: formData.get('budget'),
-        assigned_to: formData.get('assigned_to'),
-    };
+        // Collect form data
+        const formData = new FormData(this);
+        alert(formData.get('deadline'));
+        const data = {
+            name: formData.get('name'),
+            description: formData.get('description'),
+            budget: formData.get('budget'),
+            assigned_to: formData.get('assigned_to'),
+            deadline: formData.get('deadline'),
+        };
 
-    try {
-        const response = await fetch('http://127.0.0.1:8000/api/store', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
-            },
-            body: JSON.stringify(data), // Send JSON data
-        });
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                body: JSON.stringify(data), // Send JSON data
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        if (response.ok && result.status) {
-            alert('Project created successfully!');
-            this.reset(); // Reset the form
-        } else if (result.errors) {
-            // Handle validation errors
-            alert('Validation error: ' + JSON.stringify(result.errors));
-        } else {
-            alert('Failed to save project: ' + result.message);
+            if (response.ok && result.status) {
+                alert('Project created successfully!');
+                alert(result.data)
+                alert(result.deadline)
+                this.reset(); // Reset the form
+            } else if (result.errors) {
+                // Handle validation errors
+                alert('Validation error: ' + JSON.stringify(result.errors));
+            } else {
+                alert('Failed to save project: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-    }
-});
+    });
 
 </script>

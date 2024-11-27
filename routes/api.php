@@ -33,4 +33,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(AdminController::class)->group(function () {
     Route::post('store','store' );
+
 });
+ Route::post('/update-status', [AdminController::class, 'updateStatus']);
+//Route::middleware('auth:api')->post('/update-status', [AdminController::class, 'updateStatus']);
