@@ -7,21 +7,17 @@
     <title>Manage Your Business</title>
   </head>
 
-  <body>
-    <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md">
-      <!-- Logo or Brand Name -->
-      <div class="text-2xl font-bold text-gray-800 font-poppins">Your Logo</div>
-
-      <!-- Navigation Links in a Row -->
-      <ul class="flex items-center mx-10">
-        <li>
-          <a href="./index.html" class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Home</a>
-        </li>
-        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">About Us</li>
-        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Service</li>
-        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">Contact Us</li>
-        <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
-          <select class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium" onchange="navigateToPage(this.value)">
+  <body class="bg-customBg">
+    <!-- Navbar -->
+    <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md sticky top-0 z-50">
+      <div class="text-xl font-bold text-gray-800">Your Logo</div>
+      <ul class="hidden md:flex items-center mx-10 space-x-4">
+        <li><a href="./index.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Home</a></li>
+        <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">About Us</li>
+        <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</li>
+        <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Contact Us</li>
+        <li class="py-2 px-4">
+          <select class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-medium" onchange="navigateToPage(this.value)">
             <option value="#" disabled selected>More Options</option>
             <option value="./team.html">Teams Available</option>
             <option value="./create-project.html">Project Dashboard</option>
@@ -31,73 +27,104 @@
         </li>
         <a href="./login.html" class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium"> Login </a>
       </ul>
+
+      <!-- Mobile Hamburger Menu -->
+      <button id="menuToggle" class="block md:hidden text-gray-800 text-2xl">&#9776;</button>
     </nav>
 
-    <div class="signup-container bg-customBg w-full h-screen flex">
-      <!-- Left Section -->
-      <div class="left-section flex-1 flex flex-col mt-28 px-16 ml-10 text-white">
-        <!-- Heading Section -->
-        <div class="signup-text">
-          <h1 class="text-5xl leading-tight font-poppins font-bold">Project Management</h1>
-          <h1 class="text-5xl leading-tight font-poppins font-bold">Made Easy.</h1>
-          <p class="text-lg mt-4 font-poppins font-light">Plan, Track, and Run Successful Projects Together.</p>
-        </div>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-40">
+      <ul class="flex flex-col items-center space-y-4 py-4">
+        <li><a href="./index.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Home</a></li>
+        <li><a href="./about.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">About Us</a></li>
+        <li><a href="./service.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</a></li>
+        <li><a href="./contact.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Contact Us</a></li>
+        <li><a href="./login.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Login</a></li>
+      </ul>
+    </div>
 
-        <!-- Form Section -->
-        <div class="signup-form mt-10">
-          <h5 class="text-xl font-semibold mb-4 font-poppins">Sign Up.</h5>
-          <!-- Add a wrapper with a fixed width -->
-          <form id="signup-form" class="flex flex-col space-y-4 w-[400px]">
-            <input id="username" class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg" placeholder="Enter Username" required />
-            <input id="email" class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg" placeholder="Enter Email" type="email" required />
-            <input
-              id="password"
-              class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
-              placeholder="Enter Password"
-              type="password"
-              required
-            />
-            <input
-              id="confirm-password"
-              class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
-              placeholder="Confirm Password"
-              type="password"
-              required
-            />
-            <div class="agreement-text">
-              <p class="text-xs font-poppins font-light">
-                I agree to the Atlassian customer agreement, which incorporates by reference the AI Product-Specific Terms and acknowledges the
-                privacy policy!
+    <main class="bg-customBg w-full min-h-screen flex flex-col md:flex-row py-14 md:py-20 pt-16 md:pt-28 overflow-auto">
+      <!-- Left Section -->
+      <div class="flex flex-col justify-center px-8 md:px-16 text-white h-full">
+        <section>
+          <div>
+            <h1 class="text-4xl sm:text-5xl leading-none font-poppins font-bold">Project Management</h1>
+            <h1 class="text-4xl sm:text-5xl leading-tight font-poppins font-bold">Made Easy.</h1>
+            <p class="text-lg mt-4 font-poppins font-light">Plan, Track, and Run Successful Projects Together.</p>
+          </div>
+
+          <!-- Form Section -->
+          <div class="py-10">
+            <form id="signup-form" class="flex flex-col space-y-4 w-full sm:w-[400px] mx-auto">
+              <h5 class="text-xl font-semibold font-poppins">Sign Up</h5>
+              <label for="username" class="sr-only">Username</label>
+              <input
+                id="username"
+                class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
+                placeholder="Enter Username"
+                required
+                type="text"
+              />
+
+              <label for="email" class="sr-only">Email</label>
+              <input
+                id="email"
+                class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
+                placeholder="Enter Email"
+                type="email"
+                required
+              />
+
+              <label for="password" class="sr-only">Password</label>
+              <input
+                id="password"
+                class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
+                placeholder="Enter Password"
+                type="password"
+                required
+                autocomplete="new-password"
+              />
+
+              <label for="confirm-password" class="sr-only">Confirm Password</label>
+              <input
+                id="confirm-password"
+                class="py-2 px-4 rounded-3xl text-center font-poppins text-customBg"
+                placeholder="Confirm Password"
+                type="password"
+                required
+                autocomplete="new-password"
+              />
+
+              <fieldset class="agreement-text text-white">
+                <legend class="sr-only">Agreement Terms</legend>
+                <p class="text-xs font-poppins font-light">
+                  I agree to the Atlassian customer agreement, which incorporates by reference the AI Product-Specific Terms and acknowledges the
+                  privacy policy!
+                </p>
+              </fieldset>
+
+              <button
+                type="submit"
+                class="bg-white text-customBg font-poppins text-base font-semibold py-2 px-4 rounded-3xl transition-all ease-in-out hover:bg-gray-400 mx-auto justify-center w-28"
+                aria-label="Sign Up"
+              >
+                Sign Up
+              </button>
+
+              <p class="text-center text-white font-poppins text-sm mt-4">
+                Already have an account? <a href="./login.html" class="text-white cursor-pointer">Login!</a>
               </p>
-            </div>
-            <button
-              type="submit"
-              class="bg-white text-customBg font-poppins text-base font-semibold py-2 px-4 rounded-3xl transition-all ease-in-out hover:bg-gray-400 mx-auto justify-center w-28"
-            >
-              Sign Up
-            </button>
-            <p class="text-center text-customBg font-poppins text-sm mt-4">
-              Already have an account? <a href="./login.html" class="text-customHover cursor-pointer">Login!</a>
-            </p>
-          </form>
-        </div>
+            </form>
+          </div>
+        </section>
       </div>
 
-      <!-- Right Section -->
+      <!-- Right Section (Background Image) -->
       <div
-        class="right-section items-center justify-center bg-cover bg-center h-[50%] w-full"
-        style="
-          background-image: url('./assets/Signup.png');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          height: 50vh;
-          width: 45%;
-          margin-top: 200px;
-          margin-right: 80px;
-        "
+        class="flex items-center justify-center mx-auto bg-cover bg-center h-full w-full md:w-1/2"
+        style="background-image: url('./assets/Signup.png')"
       ></div>
-    </div>
+    </main>
 
     <script>
       document.getElementById("signup-form").addEventListener("submit", async function (event) {
@@ -108,7 +135,6 @@
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm-password").value;
-        const role = document.getElementById("role").value;
 
         // Validate password
         if (password !== confirmPassword) {
@@ -120,8 +146,7 @@
         const userData = {
           username,
           email,
-          password,
-          role
+          password
         };
 
         try {
@@ -148,6 +173,19 @@
           alert("An error occurred. Please try again later.");
         }
       });
+
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      const navigateToPage = (value) => {
+        if (value) {
+          window.location.href = value;
+        }
+      };
     </script>
   </body>
 </html>
