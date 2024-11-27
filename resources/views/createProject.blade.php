@@ -191,23 +191,77 @@
 
         <!-- Create Project Form -->
         <section class="form-container">
-            <form class="create-project-form" action="">
+            <form id="create-project-form" class="create-project-form">
+                @csrf
                 <h1 class="form-title">Create Project</h1>
-                <input type="text" class="input-field" placeholder="Project Name" />
-                <input type="text" class="input-field" placeholder="Project Description" />
-                <input type="text" class="input-field" placeholder="Project Budget" />
-                <input type="text" class="input-field" placeholder="Project Deadline" />
+                <input type="text" name="name" class="input-field" placeholder="Project Name" required />
+                <input type="text" name="description" class="input-field" placeholder="Project Description" required />
+                <input type="text" name="budget" class="input-field" placeholder="Project Budget" required />
+                <select name="assigned_to" class="input-field" required>
+                    <option value="" disabled selected>Select a Team</option>
+                    @foreach ($teams as $team)
+                        <option value="{{ $team->id }}">{{ $team->username }}</option>
+                    @endforeach
+                </select>
                 <button class="create-btn" type="submit">Create</button>
             </form>
+
         </section>
+
+        <!-- CSRF Token Meta Tag (for Laravel protection) -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
     </main>
 </body>
 
 </html>
+
 <script>
     function navigateToPage(value) {
         if (value) {
             window.location.href = value; // Redirect to the selected page
         }
     }
+    document.getElementById('create-project-form').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // Collect form data
+    const formData = new FormData(this);
+    const data = {
+        name: formData.get('name'),
+        description: formData.get('description'),
+        budget: formData.get('budget'),
+        assigned_to: formData.get('assigned_to'),
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/store', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify(data), // Send JSON data
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.status) {
+            alert('Project created successfully!');
+            this.reset(); // Reset the form
+        } else if (result.errors) {
+            // Handle validation errors
+            alert('Validation error: ' + JSON.stringify(result.errors));
+        } else {
+            alert('Failed to save project: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    }
+});
+
 </script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -24,7 +25,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('profile', 'profile');
-    Route::post('update', 'update');
+    Route::put('update', 'update');
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-    Route::post('destroy', 'destroy');
+    Route::delete('destroy', 'destroy');
+});
+
+
+Route::controller(AdminController::class)->group(function () {
+    Route::post('store','store' );
 });

@@ -24,7 +24,7 @@
         <p class="font-poppins text-lg leading-6 text-gray-400">
           Plan, Track, And Run Successful Projects Together.
         </p>
-        <a href="./signup.html"
+        <a href="./signup"
           class="bg-white text-customBg py-2 px-4 w-32 rounded-lg font-poppins font-medium transition-colors duration-500 ease-in-out hover:bg-customHover hover:text-white">
           Get Started
         </a>

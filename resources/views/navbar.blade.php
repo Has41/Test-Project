@@ -15,35 +15,60 @@
             Service</li>
         <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
             Contact Us</li>
-        <li class="  py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
-            <select class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium"
-                onchange="navigateToPage(this.value)">
-                <option value="#" disabled selected>More Options</option>
-                <option value="./team.html">Teams Available</option>
-                <option value="./create-project.html">Project Dashboard</option>
-                <option value="./module.html">Modules</option>
-                <option value="./project.html">Projects</option>
-            </select>
-        </li>
-        @if (Auth::check())
-            {{-- User is logged in, show logout button --}}
-            <a id="logout-button" href="#"
-                class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
-                Logout
-            </a>
+        <!-- @if (Auth::check()) -->
+        @if (Request::is('login'))
+            {{-- Hide buttons on the login page --}}
         @else
-            {{-- User is not logged in, show login button --}}
-            <a href="{{ route('login') }}"
-                class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
-                Login
-            </a>
+            @auth
+
+            <li class="py-2 px-4 nav-item text-customBg hover:text-customHover cursor-pointer font-poppins font-medium">
+    <select class="appearance-none bg-transparent outline-none text-customBg cursor-pointer font-medium"
+        onchange="navigateToPage(this.value)">
+        <option value="#" disabled selected>More Options</option>
+        <option value="/team">Teams Available</option>
+        @if ( Auth::user()->role === 'admin')
+            <option value="/create">Project Dashboard</option>
         @endif
+        <option value="/module">Modules</option>
+        <option value="/project">Projects</option>
+    </select>
+</li>
+
+                <script>
+                    function navigateToPage(url) {
+                        if (url && url !== '#') {
+                            window.location.href = url;
+                        }
+                    }
+                </script>
+
+            @endauth
+        @endif
+        <!-- @endif -->
+        @if (Request::is('login'))
+            {{-- Hide buttons on the login page --}}
+        @else
+            @auth
+                {{-- Show logout button if the user is logged in --}}
+                <a id="logout-button" href="#"
+                    class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+                    Logout
+                </a>
+            @else
+                {{-- Show login button if the user is not logged in --}}
+                <a href="{{ route('login') }}"
+                    class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+                    Login
+                </a>
+            @endauth
+        @endif
+
 
         <!-- @if(Auth::check())
             <p style="color: green;">Authenticated User: {{ Auth::user()->username }}</p>
         @else
             <p style="color: green;">Not authenticated</p>
-        @endif  -->
+        @endif   -->
 
 
 
@@ -55,46 +80,41 @@
 </nav>
 <script>
 
-document.getElementById("logout-button").addEventListener("click", async function (event) {
-    event.preventDefault(); // Prevent default behavior of link
+    document.getElementById("logout-button").addEventListener("click", async function (event) {
+        event.preventDefault(); // Prevent default behavior of link
+       
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token from localStorage
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token from localStorage
-    
-   
-    if (!accessToken) {
-        alert("No access token found. Please log in again.");
-        return;
-    }
-
-    try {
-        const res = await fetch("http://127.0.0.1:8000/api/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken, // Send the CSRF token
-                "Authorization": `Bearer ${accessToken}` // Send the access token
-            }
-        });
-
-        const result = await res.json();
-        if (result.status) {
-           
-            // Clear the access token from localStorage after a successful logout
-           localStorage.removeItem('accessToken');
-            {{auth()->logout()}}
-            // Redirect the user after logout
-            window.location.href = result.redirect_url;
-           
-        } else {
-            alert("Logout failed: " + result.message);
+        if (!accessToken) {
+            alert("No access token found. Please log in again.");
+            return;
         }
-    } catch (error) {
-        console.error("Error during logout:", error);
-        alert("An error occurred. Please try again.");
-    }
-    
-    
-});
+
+        try {
+            const res = await fetch("http://127.0.0.1:8000/api/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken, // Send the CSRF token
+                    "Authorization": `Bearer ${accessToken}` // Send the access token
+                }
+            });
+
+            const result = await res.json();
+            if (result.status) {
+                // Clear the access token from localStorage after a successful logout
+                localStorage.removeItem('accessToken');
+
+                // Redirect the user after logout
+                window.location.href = result.redirect_url;
+            } else {
+                alert("Logout failed: " + result.message);
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+            alert("An error occurred. Please try again.");
+        }
+    });
 
 </script>

@@ -111,7 +111,9 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User updated successfully',
-            'data' => $user
+            'data' => $user,
+            'redirect_url' => url('/')
+
         ], 200);
     }
 

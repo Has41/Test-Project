@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/singnup', function () {
-    if (Auth::check()) {
+Route::get('/signup', function () {
+    if (@auth()->check()) {
         // If the user is already logged in, redirect to the index page
-        return redirect('/');
+        //return redirect('/');
     }
 
     // If not logged in, show the signup page
@@ -24,9 +25,9 @@ Route::get('/singnup', function () {
 })->name('signup');
 
 Route::get('/login', function () {
-    if (Auth::check()) {
+    if (@auth()->check()) {
         // If the user is already logged in, redirect to the index page
-        return redirect('/index');
+       // return redirect('/');
     }
 
     // If not logged in, show the login page
@@ -46,6 +47,4 @@ Route::get('/module', function () {
     return view('module');
 })->name('module');
 
-Route::get('/create', function () {
-    return view('createProject');
-})->name('createProject');
+Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');

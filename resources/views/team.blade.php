@@ -148,18 +148,20 @@
     <!-- Cards Section -->
     <section class="cards">
       <!-- Card 1 -->
+      @foreach ($team as $teams )
+      
+      @endforeach
       <div class="card">
         <div class="card-avatar">DP</div>
-        <h2 class="card-title">Lorem Ipsum</h2>
-        <p class="card-role">Manager</p>
+        <h2 class="card-title"> {{ $teams->username }}</h2>
         <div class="card-info">
           <div class="info-item">
-            <span>Project Done</span>
-            <span>-</span>
+            <span>Project Statuus</span>
+            <span>{{$teams->status}}</span>
           </div>
           <div class="info-item">
-            <span>Users</span>
-            <span>-</span>
+            <span>Deadline</span>
+            <span>{{$teams->deadline}}</span>
           </div>
           <div class="info-item">
             <span>Clients</span>
@@ -179,72 +181,9 @@
           <span>☆</span>
         </div>
       </div>
+      @endforeach
 
-      <!-- Card 2 -->
-      <div class="card">
-        <div class="card-avatar">DP</div>
-        <h2 class="card-title">Lorem Ipsum</h2>
-        <p class="card-role">Tester</p>
-        <div class="card-info">
-          <div class="info-item">
-            <span>Project Done</span>
-            <span>-</span>
-          </div>
-          <div class="info-item">
-            <span>Users</span>
-            <span>-</span>
-          </div>
-          <div class="info-item">
-            <span>Clients</span>
-            <span>-</span>
-          </div>
-          <div class="info-item">
-            <span>Impressions</span>
-            <span>-</span>
-          </div>
-        </div>
-        <p class="status">Available</p>
-        <div class="rating">
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>☆</span>
-          <span>☆</span>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="card">
-        <div class="card-avatar">DP</div>
-        <h2 class="card-title">Lorem Ipsum</h2>
-        <p class="card-role">Developers</p>
-        <div class="card-info">
-          <div class="info-item">
-            <span>Project Done</span>
-            <span>10</span>
-          </div>
-          <div class="info-item">
-            <span>Users</span>
-            <span>3</span>
-          </div>
-          <div class="info-item">
-            <span>Clients</span>
-            <span>6</span>
-          </div>
-          <div class="info-item">
-            <span>Impressions</span>
-            <span>7</span>
-          </div>
-        </div>
-        <p class="status">Available 23 November</p>
-        <div class="rating">
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-        </div>
-      </div>
+      
     </section>
   </div>
 </body>
