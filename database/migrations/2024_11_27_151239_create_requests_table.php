@@ -17,14 +17,15 @@ class CreateRequestsTable extends Migration
             $table->unsignedBigInteger('project_id');  // Foreign key referencing projects table
             $table->unsignedBigInteger('givenBy_id');  // Foreign key referencing users table
             $table->unsignedBigInteger('requestBy_id');  // Foreign key referencing users table
-            $table->unsignedBigInteger('assigned_to');  // Foreign key referencing users table
+            $table->unsignedBigInteger('assigned_to')->nullable();  // Foreign key referencing users table
+            
             $table->timestamps();  // created_at, updated_at columns
 
             // Define foreign key relationships
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('givenBy_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('requestBy_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('assigned_to')->references('id')->on('users')->onDelete('set null');
         });
     }
 

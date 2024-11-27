@@ -64,20 +64,19 @@
     .cards {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      
       gap: 1.5rem;
     }
 
     .card {
       flex: 1 1 calc(33.33% - 1rem);
       max-width: calc(33.33% - 1rem);
-      box-sizing: border-box;
+  
       background: #ffffff;
       color: #121063;
       border-radius: 1.5rem;
       text-align: center;
       padding: 3rem 1rem;
-      width: 20rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-top: 4%;
     }
@@ -150,64 +149,67 @@
     <!-- Cards Section -->
     <section class="cards">
       @if ($teams->isEmpty())
+      <div class="card"></div>
       <p>No teams available.</p>
     @else
-      @foreach ($teams as $member)
-      <div class="card">
-      <div class="card-avatar">DP</div>
-      <h2 class="card-title">{{ $member->username }}</h2>
-      <div class="card-info">
-      <div class="info-item">
-      <b>Project Status</b>
-      <span>{{ $member->status }}</span>
-      </div>
-      <div class="info-item">
-      <b>Deadline</b>
-      <span class="deadline">{{ $member->deadline }}</span>
-      </div>
-      <div class="info-item">
-      <b>Pending Days</b>
-      <span class="pending-days"></span>
-      </div>
-      </div>
-      @if ($member->status=='open')
+        @foreach ($teams as $member)
+        <div class="card">
+        <div class="card-avatar">DP</div>
+        <h2 class="card-title">{{ $member->username }}</h2>
+        <div class="card-info">
+          <div class="info-item">
+          <b>Project Status</b>
+          <span>{{ $member->status }}</span>
+          </div>
+          <div class="info-item">
+          <b>Deadline</b>
+          <span class="deadline">{{ $member->deadline }}</span>
+          </div>
+          <div class="info-item">
+          <b>Pending Days</b>
+          <span class="pending-days"></span>
+          </div>
+        </div>
+        @if ($member->status == 'open')
       <button
-      style="margin-left: 50px; background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
-      class="request-btn" data-member-id="{{ $member->id }}">Request</button>
+        style=" background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
+        class="request-btn" data-member-id="{{ $member->id }}">Request</button>
+      <p style="display: none;" class="givenBy">{{$member->assigned_to}}</p>
+      <a href="">Requests</a>
       </div>
-    
-      
-      
 
-      @elseif (Auth::user()->id == $member->assigned_to || Auth::user()->role == 'admin')
-      
-      <div style="display: flex;  align-items: center;">
-      <select style="margin-left: 50px;" class="status" name="status" id="status-{{ $member->id }}">
+
+
+
+    @elseif (Auth::user()->id == $member->assigned_to || Auth::user()->role == 'admin')
+
+    <div style="display: flex;  align-items: center;">
+    <select style="margin-left: 50px;" class="status" name="status" id="status-{{ $member->id }}">
       <option value="{{ $member->status }}" selected disabled>{{ $member->status }} </option>
       <option value="pending">Pending</option>
       <option value="in-progress">In-progress</option>
       <option value="completed">Completed</option>
       <option value="open">Open</option>
-      </select>
-      <button
-      style="margin-left: 50px; background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
+    </select>
+    <button
+      style=" background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
       class="update-btn" data-member-id="{{ $member->id }}">Update</button>
-      </div>
-    @else
-      <p class="status">{{ $member->status }}</p>
+    </div>
+  @else
+  <p class="status">{{ $member->status }}</p>
+@endif
+        <!-- <div class="rating">
+        <span>★</span>
+        <span>★</span>
+        <span>★</span>
+        <span>★</span>
+        <span>☆</span>
+        </div> -->
+        </div>
+      @endforeach
     @endif
-      <div class="rating">
-      <span>★</span>
-      <span>★</span>
-      <span>★</span>
-      <span>★</span>
-      <span>☆</span>
-      </div>
-      </div>
-    @endforeach
-    @endif
-    
-    </section>
+
+  </section>
   </div>
 
   <script>
@@ -238,43 +240,73 @@
         }
       });
     });
-    // Add event listener to all update buttons
-    document.querySelectorAll('.update-btn').forEach(button => {
-      button.addEventListener('click', function () {
-        // Get the member ID
+    document.querySelectorAll('.request-btn').forEach(button => {
+    button.addEventListener('click', function () {
         const memberId = this.getAttribute('data-member-id');
-        // Get the selected status
-        const status = document.querySelector(`#status-${memberId}`).value;
+        const givenBy = this.parentElement.querySelector('.givenBy').textContent;
 
-        // Make the API call to update the status
-        fetch('http://127.0.0.1:8000/api/update-status', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-          },
-          body: JSON.stringify({
-            member_id: memberId,
-            status: status,
-          }),
+        fetch('http://127.0.0.1:8000/api/request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify({
+                project_id: memberId,
+                givenBy_id: givenBy, // Updated key name
+            }),
         })
-          .then(response => response.json())
-          .then(data => {
+        .then(response => response.json())
+        .then(data => {
             if (data.status) {
-              alert('Status updated successfully');
+                alert('Request sent successfully');
             } else {
-              alert('Failed to update status');
+                alert('Failed to send request: ' + JSON.stringify(data.errors));
             }
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while updating the status');
-          });
-      });
+            alert('An error occurred while sending the request');
+        });
     });
-    if (value) {
-      window.location.href = value; // Redirect to the selected page
-    }
+});
+
+      document.querySelectorAll('.update-btn').forEach(button => {
+        button.addEventListener('click', function () {
+          // Get the member ID
+          const memberId = this.getAttribute('data-member-id');
+          // Get the selected status
+          const status = document.querySelector(`#status-${memberId}`).value;
+
+          // Make the API call to update the status
+          fetch('http://127.0.0.1:8000/api/update-status', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify({
+              member_id: memberId,
+              status: status,
+            }),
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.status) {
+                alert('Status updated successfully');
+              } else {
+                alert('Failed to update status');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred while updating the status');
+            });
+        });
+      });
+      if (value) {
+        window.location.href = value; // Redirect to the selected page
+      }
   </script>
 </body>
 

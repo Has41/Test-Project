@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Request as RequestModel; 
 use Validator;
 use Auth;
 
@@ -109,5 +110,63 @@ class AdminController extends Controller
             'message' => 'Status updated successfully',
         ]);
     }
+    public function deleteProject(Request $request, $id)
+    {
+        $project = Project::find($id);
+        if (!$project) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Project not found',
+            ], 404);
+        }
+        $project->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Project deleted successfully',
+        ]);
+    }
+
+    public function request(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'project_id' => 'required|exists:projects,id',
+            'givenBy_id' => 'required|exists:users,id',
+        ], [
+            'project_id.required' => 'Project ID is required.',
+            'givenBy_id.required' => 'User ID is required.',
+        ]);
     
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 401);
+        }
+    
+        // Prepare the data for insertion
+        $data = [
+            'project_id' => $request->project_id,
+            'givenBy_id' => $request->givenBy_id,
+            'requestBy_id' => Auth::id(), // Corrected to match the column name in the database
+            'assigned_to' => $request->givenBy_id, // Assign givenBy_id to assigned_to if needed
+        ];
+    
+        // Create the request record
+        $newRequest = RequestModel::create($data);
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Request sent successfully',
+            'data' => $newRequest,
+        ]);
+    }
+    
+
+    
+
+
 }
+
+
+
