@@ -6,7 +6,7 @@
     <link href="./output.css" rel="stylesheet" />
     <title>Manage Your Business</title>
   </head>
-  <body class="bg-[#0b0b45] text-white font-poppins">
+  <body class="bg-[#0b0b45] text-white font-poppins min-h-screen"">
     <!-- Navbar -->
     <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md sticky top-0 z-50">
       <div class="text-xl font-bold text-gray-800">Your Logo</div>
@@ -14,8 +14,8 @@
         <li>
           <a href="./index.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Home</a>
         </li>
-        <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">About Us</li>
-        <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</li>
+        <li ><a href="./about-us.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins" >About Us </a> </li>
+        <li > <a href="./services.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</a> </li>
         <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Contact Us</li>
         <li class="py-2 px-4">
           <select
@@ -45,8 +45,8 @@
      <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden flex flex-col bg-white shadow-lg px-4 py-2">
     <a href="./index.html" class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Home</a>
-    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">About Us</a>
-    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Service</a>
+    <a href="./about-us.html" class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins" >About Us </a>
+    <a href="./services.html" class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</a>
     <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Contact Us</a>
     <select 
     class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-light text-sm py-1"
@@ -100,16 +100,19 @@
     <script>
       const menuToggle = document.getElementById("menuToggle");
       const mobileMenu = document.getElementById("mobileMenu");
-
+      
       menuToggle.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
       });
-
+      
       function navigateToPage(value) {
         if (value) {
           window.location.href = value;
         }
       }
-    </script>
+      </script>
   </body>
+  <footer class="bg-[#0b0b45] text-white text-center">
+    <p class="font-poppins">&copy; 2024 Manage Your Business. All Rights Reserved.</p>
+  </footer>
 </html>

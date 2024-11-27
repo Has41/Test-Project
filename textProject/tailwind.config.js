@@ -15,7 +15,7 @@ module.exports = {
       colors: {
         customBg: '#010039', // Custom background color
         customHover: '#030254', // Custom hover color
-        customGray: '#6B7280', // Custom gray color
+        customLight: '#F0F3FF', // Custom gray color
       },
       fontWeight: {
         thin: 100,
