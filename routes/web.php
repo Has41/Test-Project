@@ -47,9 +47,17 @@ Route::get('/module', function () {
     return view('module');
 })->name('module');
 
-// Route::get('/contact', function () {
-//     return view('contact');
-// })->name('contact');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/service', function () {
+    return view('service');
+});
 
 // Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');
 // web.php
