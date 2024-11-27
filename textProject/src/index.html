@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./output.css" rel="stylesheet" />
+  <title>Manage Your Business</title>
+</head>
+
+<body class="bg-customBg text-white">
+  <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md sticky top-0 z-50">
+    <div class="text-xl font-bold text-gray-800">Your Logo</div>
+    <ul class="hidden md:flex items-center mx-10 space-x-4">
+      <li>
+        <a href="./index.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Home</a>
+      </li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">About Us</li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Contact Us</li>
+      <li class="py-2 px-4">
+        <select class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-medium"
+          onchange="navigateToPage(this.value)">
+          <option value="#" disabled selected>More Options</option>
+          <option value="./team.html">Teams Available</option>
+          <option value="./create-project.html">Project Dashboard</option>
+          <option value="./module.html">Modules</option>
+          <option value="./project.html">Projects</option>
+        </select>
+      </li>
+
+      <a href="./login.html"
+        class="bg-[#0b0b45] text-white py-2 px-4 rounded-lg hover:bg-gray-600 font-medium">Login</a>
+    </ul>
+    <!-- Hamburger Menu -->
+    <button id="menuToggle" class="block md:hidden text-gray-800 text-2xl">
+      &#9776;
+    </button>
+  </nav>
+
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden flex flex-col bg-white shadow-lg px-4 py-2">
+    <a href="./index.html" class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Home</a>
+    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">About Us</a>
+    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Service</a>
+    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Contact Us</a>
+    <select 
+    class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-light text-sm py-1"
+    style="height: 30px; line-height: 1.5;"
+    onchange="navigateToPage(this.value)">
+    <option value="#" disabled selected>More Options</option>
+    <option value="./team.html">Teams Available</option>
+    <option value="./create-project.html">Project Dashboard</option>
+    <option value="./module.html">Modules</option>
+    <option value="./project.html">Projects</option>
+  </select>
+  
+
+    <a href="./login.html" class="p-2 text-white bg-[#0b0b45] rounded-lg hover:bg-gray-600 font-medium">Login</a>
+  </div>
+
+
+  <main>
+    <section class="grid grid-cols-1 sm:grid-cols-2 items-center justify-center h-screen p-6 sm:p-8">
+      <!-- Left Content -->
+      <div class="text-left flex flex-col gap-6 ml-24">
+        <h1 class="font-poppins font-bold text-3xl sm:text-4xl">Home</h1>
+        <h2 class="font-poppins font-bold text-3xl sm:text-4xl tracking-wide">
+          Manage Your Business
+        </h2>
+        <p class="font-poppins text-base sm:text-lg leading-6 text-gray-400">
+          Plan, Track, And Run Successful Projects Together.
+        </p>
+        <a href="./signup.html"
+          class="bg-white text-customBg py-2 px-4 w-32 rounded-lg font-poppins font-medium transition-colors duration-500 ease-in-out hover:bg-customHover hover:text-white">
+          Get Started
+        </a>
+      </div>
+      <!-- Right Content -->
+      <div class="flex justify-center items-center">
+        <img src="./assets/SideImage.png" alt="Illustration of project management"
+          class="max-w-full sm:max-w-[90%] h-auto" />
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  function navigateToPage(value) {
+    if (value) {
+      window.location.href = value;
+    }
+  }
+</script>
+
+</html>

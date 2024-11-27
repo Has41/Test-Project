@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    background-color: #010039;
+    color: #fff;
+  }
+  
+  section {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Space content between columns */
+    height: 100vh;
+    width: 100%;
+    padding: 2rem;
+    overflow: hidden;
+  }
+  
+  .left-content {
+    text-align: left;
+    margin-left: 20%;
+    display: flex; /* Change to flexbox for better alignment */
+    flex-direction: column; /* Stack elements vertically */
+    gap: 1.5rem; /* Apply vertical spacing */
+  }
+  
+  .left-content h1 {
+    font-size: 4rem;
+  }
+  
+  .left-content h2 {
+    font-size: 4rem;
+    letter-spacing: 1px;
+  }
+  
+  .left-content p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: gray;
+  }
+  
+  .right-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .right-content img {
+    max-width: 135%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+  }
+  

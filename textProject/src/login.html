@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <title>Manage Your Business</title>
+</head>
+
+<body class="bg-customBg text-white">
+  <!-- Navbar -->
+  <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md sticky top-0 z-50">
+    <div class="text-xl font-bold text-gray-800">Your Logo</div>
+    <ul class="hidden md:flex items-center mx-10 space-x-4">
+      <li>
+        <a href="./index.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Home</a>
+      </li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">About Us</li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Contact Us</li>
+      <li class="py-2 px-4">
+        <select class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-medium"
+          onchange="navigateToPage(this.value)">
+          <option value="#" disabled selected>More Options</option>
+          <option value="./team.html">Teams Available</option>
+          <option value="./create-project.html">Project Dashboard</option>
+          <option value="./module.html">Modules</option>
+          <option value="./project.html">Projects</option>
+        </select>
+      </li>
+      <a href="./signup.html"
+        class="bg-customBg text-white py-2 px-4 rounded-lg hover:bg-customHover font-poppins font-medium">
+        Sign Up
+      </a>
+    </ul>
+    <!-- Hamburger Menu -->
+    <button id="menuToggle" class="block md:hidden text-gray-800 text-2xl">
+      &#9776;
+    </button>
+  </nav>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden flex flex-col bg-white shadow-lg px-4 py-2">
+    <a href="./index.html" class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Home</a>
+    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">About Us</a>
+    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Service</a>
+    <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Contact Us</a>
+    <select class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-light text-sm py-1"
+      style="height: 30px; line-height: 1.5;" onchange="navigateToPage(this.value)">
+      <option value="#" disabled selected>More Options</option>
+      <option value="./team.html">Teams Available</option>
+      <option value="./create-project.html">Project Dashboard</option>
+      <option value="./module.html">Modules</option>
+      <option value="./project.html">Projects</option>
+    </select>
+
+
+    <a href="./signup.html" class="p-2 text-white bg-[#0b0b45] rounded-lg hover:bg-gray-600 font-medium">Sign Up</a>
+  </div>
+
+
+
+  <!-- Sign-In Section -->
+  <div class="signin-container flex flex-wrap md:flex-nowrap w-full h-auto">
+    <!-- Left Section -->
+    <div class="flex-1 flex flex-col mt-8 px-6 md:px-16 text-white">
+      <h1 class="text-3xl md:text-5xl font-bold leading-tight font-poppins">Sign In To Make</h1>
+      <h1 class="text-3xl md:text-5xl font-bold leading-tight font-poppins">Your Project Easy.</h1>
+      <p class="text-lg mt-4 font-poppins">
+        Plan, Track, and Run Successful Projects Together.
+      </p>
+      <div class="signin-form mt-6 mx-auto md:mx-0 bg-white flex justify-center rounded-2xl w-[90%] max-w-sm">
+        <form class="flex flex-col space-y-4 w-full p-4">
+          <input class="py-2 px-4 rounded-3xl font-poppins text-gray-800 bg-gray-200 text-center"
+            placeholder="Enter Email" />
+          <input class="py-2 px-4 rounded-3xl font-poppins text-gray-800 bg-gray-200 text-center"
+            placeholder="Enter Password" type="password" />
+          <button
+            class="bg-customBg text-white font-poppins text-base font-semibold py-2 px-4 rounded-3xl transition-all ease-in-out hover:bg-customHover mx-auto w-full">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex-1 flex items-center justify-center bg-cover bg-center w-full md:w-1/2" style="
+      background-image: url('./assets/Login.png');
+      height: 300px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;">
+    </div>
+  </div>
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    function navigateToPage(value) {
+      if (value) {
+        window.location.href = value;
+      }
+    }
+  </script>
+</body>
+
+</html>

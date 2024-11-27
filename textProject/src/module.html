@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <title>Manage Your Business</title>
+</head>
+<body class="bg-gray-50">
+
+  <nav class="h-16 w-full bg-white flex items-center justify-between px-8 shadow-md sticky top-0 z-50">
+    <div class="text-xl font-bold text-gray-800">Your Logo</div>
+    <ul class="hidden md:flex items-center mx-10 space-x-4">
+      <li>
+        <a href="./index.html" class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Home</a>
+      </li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">About Us</li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Service</li>
+      <li class="py-2 px-4 text-[#0b0b45] hover:text-gray-600 font-medium font-poppins">Contact Us</li>
+      <li class="py-2 px-4">
+        <select
+          class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-medium"
+          onchange="navigateToPage(this.value)"
+        >
+          <option value="#" disabled selected>More Options</option>
+          <option value="./team.html">Teams Available</option>
+          <option value="./create-project.html">Project Dashboard</option>
+          <option value="./module.html">Modules</option>
+          <option value="./project.html">Projects</option>
+        </select>
+      </li>
+    </ul>
+    <!-- Hamburger Menu -->
+    <button id="menuToggle" class="block md:hidden text-gray-800 text-2xl">
+      &#9776;
+    </button>
+  </nav>
+  </nav>
+
+<!-- Mobile Menu -->
+ <div id="mobileMenu" class="hidden flex flex-col bg-white shadow-lg px-4 py-2">
+  <a href="./index.html" class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Home</a>
+  <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">About Us</a>
+  <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Service</a>
+  <a class="py-2 text-[#0b0b45] hover:text-gray-600 font-medium">Contact Us</a>
+  <select 
+  class="bg-transparent outline-none text-[#0b0b45] cursor-pointer font-light text-sm py-1"
+  style="height: 30px; line-height: 1.5;"
+  onchange="navigateToPage(this.value)">
+  <option value="#" disabled selected>More Options</option>
+  <option value="./team.html">Teams Available</option>
+  <option value="./create-project.html">Project Dashboard</option>
+  <option value="./module.html">Modules</option>
+  <option value="./project.html">Projects</option>
+</select>
+
+
+  <!-- <a href="./login.html" class="p-2 text-white bg-[#0b0b45] rounded-lg hover:bg-gray-600 font-medium">Login</a> -->
+</div>
+
+
+
+
+  <main>
+    <section class="h-screen p-4 sm:p-8 overflow-hidden bg-customBg text-white">
+      <!-- Header Row -->
+      <div class="flex flex-wrap justify-between items-center px-4 sm:px-12 mt-4">
+        <h1 class="text-lg sm:text-xl lg:text-2xl bg-white text-customBg p-2 rounded-2xl w-auto text-center font-poppins">
+          Module Status
+        </h1>
+        <h1 class="text-sm sm:text-lg bg-white text-customBg p-2 rounded-2xl w-auto text-center font-poppins">
+          Language Eng
+        </h1>
+      </div>
+
+      <!-- Module Details -->
+      <div class="flex flex-ro lg:flex-row items-center justify-center mt-10">
+        <div class="bg-white w-full lg:w-[60%] rounded-3xl p-6">
+          <div class="flex flex-row md:flex-row">
+            <!-- Left Column -->
+            <div class="flex-1 space-y-3 mt-4">
+              <p class="text-customBg font-poppins text-lg font-semibold">Module Name:</p>
+              <p class="text-customBg font-poppins text-lg font-semibold">Module Cost:</p>
+              <p class="text-customBg font-poppins text-lg font-semibold">Module Deadline:</p>
+              <p class="text-customBg font-poppins text-lg font-semibold">Module Status:</p>
+              <div class="flex items-center space-x-2 mt-4 bg-gray-200 rounded-lg p-2">
+                <p class="text-customBg text-xs">◯ Available</p>
+                <p class="text-customBg text-xs">★★★★</p>
+              </div>
+            </div>
+            <!-- Right Column -->
+            <div class="flex-1 space-y-3 mt-4">
+              <p class="text-customHover font-poppins text-lg">Design</p>
+              <p class="text-customHover font-poppins text-lg">$200</p>
+              <p class="text-customHover font-poppins text-lg">23 November</p>
+              <p class="text-customHover font-poppins text-lg">50%</p>
+            </div>
+            <div class="hidden lg:block bg-cover bg-center w-[300px] h-[300px] mt-6 lg:mt-0 lg:ml-6 rounded-3xl"
+              style="background-image: url('./assets/Login.png');"></div>
+          </div>
+          </div>
+          <!-- Image Section -->
+        </div>
+    </section>
+  </main>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    function navigateToPage(value) {
+      if (value) {
+        window.location.href = value;
+      }
+    }
+  </script>
+</body>
+</html>
