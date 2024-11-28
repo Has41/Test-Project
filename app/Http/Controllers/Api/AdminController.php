@@ -198,7 +198,8 @@ class AdminController extends Controller
         $newProject->status = 'pending';
         $newProject->save();
     
-        $requestModel = RequestModel::find($request->request_id);
+        // Delete the request
+        $requestModel = RequestModel::where('project_id', $request->project_id);
         $requestModel->delete();
     
         return response()->json([
