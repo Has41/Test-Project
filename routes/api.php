@@ -39,3 +39,4 @@ Route::controller(AdminController::class)->group(function () {
 //Route::middleware('auth:api')->post('/update-status', [AdminController::class, 'updateStatus']);
 Route::post('/delete-project', [AdminController::class, 'deleteProject']);
 Route::post('/request', [AdminController::class, 'request']);
+Route::post('/accept', [AdminController::class, 'accept']);

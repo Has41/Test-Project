@@ -7,6 +7,18 @@
   <title>Team Available</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
+    @media (max-width: 768px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* General Styles */
     body,
     h1,
@@ -60,18 +72,13 @@
       cursor: pointer;
     }
 
-    /* Cards Section */
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      
-      gap: 1.5rem;
-    }
-
+    /* Ensure uniform height for all cards */
     .card {
-      flex: 1 1 calc(33.33% - 1rem);
-      max-width: calc(33.33% - 1rem);
-  
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      /* Space out content inside card */
+      align-items: center;
       background: #ffffff;
       color: #121063;
       border-radius: 1.5rem;
@@ -79,12 +86,25 @@
       padding: 3rem 1rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-top: 4%;
+      min-height: 350px;
+      overflow: hidden;
+      /* Set a consistent height for all cards */
     }
 
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
     }
+
+    /* Ensure the grid layout remains intact */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      align-items: start;
+      /* Align cards at the start */
+    }
+
 
     .card-avatar {
       background: #121063;
@@ -175,7 +195,7 @@
         style=" background-color: #121063; text-align: center; color: #fff; padding: 0.5rem 1rem; border-radius: 1.5rem; border: none; cursor: pointer;"
         class="request-btn" data-member-id="{{ $member->id }}">Request</button>
       <p style="display: none;" class="givenBy">{{$member->assigned_to}}</p>
-      <a href="">Requests</a>
+      <a href="{{'/requests'}}">Requests</a>
       </div>
 
 
@@ -241,72 +261,94 @@
       });
     });
     document.querySelectorAll('.request-btn').forEach(button => {
-    button.addEventListener('click', function () {
+      button.addEventListener('click', function () {
         const memberId = this.getAttribute('data-member-id');
         const givenBy = this.parentElement.querySelector('.givenBy').textContent;
 
         fetch('http://127.0.0.1:8000/api/request', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            },
-            body: JSON.stringify({
-                project_id: memberId,
-                givenBy_id: givenBy, // Updated key name
-            }),
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          },
+          body: JSON.stringify({
+            project_id: memberId,
+            givenBy_id: givenBy, // Updated key name
+          }),
         })
-        .then(response => response.json())
-        .then(data => {
+          .then(response => response.json())
+          .then(data => {
             if (data.status) {
-                alert('Request sent successfully');
+              alert('Request sent successfully');
             } else {
-                alert('Failed to send request: ' + JSON.stringify(data.errors));
+              alert('Failed to send request: ' + JSON.stringify(data.errors));
             }
-        })
-        .catch(error => {
+          })
+          .catch(error => {
             console.error('Error:', error);
             alert('An error occurred while sending the request');
-        });
+          });
+      });
     });
+
+    document.querySelectorAll('.update-btn').forEach(button => {
+  button.addEventListener('click', function () {
+    const memberId = this.getAttribute('data-member-id');
+    const status = document.querySelector(`#status-${memberId}`).value;
+
+    // Update the status and re-render the grid properly
+    fetch('http://127.0.0.1:8000/api/update-status', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      },
+      body: JSON.stringify({
+        member_id: memberId,
+        status: status,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status) {
+          alert('Status updated successfully');
+          // Force re-alignment of grid
+          const cardsContainer = document.querySelector('.cards');
+          cardsContainer.style.display = 'none';
+          setTimeout(() => {
+            cardsContainer.style.display = 'grid';
+          }, 0);
+        } else {
+          alert('Failed to update status');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while updating the status');
+      });
+  });
 });
 
-      document.querySelectorAll('.update-btn').forEach(button => {
-        button.addEventListener('click', function () {
-          // Get the member ID
-          const memberId = this.getAttribute('data-member-id');
-          // Get the selected status
-          const status = document.querySelector(`#status-${memberId}`).value;
+window.addEventListener('load', adjustCardHeights);
+window.addEventListener('resize', adjustCardHeights);
 
-          // Make the API call to update the status
-          fetch('http://127.0.0.1:8000/api/update-status', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            },
-            body: JSON.stringify({
-              member_id: memberId,
-              status: status,
-            }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data.status) {
-                alert('Status updated successfully');
-              } else {
-                alert('Failed to update status');
-              }
-            })
-            .catch(error => {
-              console.error('Error:', error);
-              alert('An error occurred while updating the status');
-            });
-        });
-      });
-      if (value) {
-        window.location.href = value; // Redirect to the selected page
-      }
+function adjustCardHeights() {
+  const cards = document.querySelectorAll('.card');
+  let maxHeight = 0;
+
+  cards.forEach(card => {
+    card.style.height = 'auto'; // Reset height to calculate actual height
+    maxHeight = Math.max(maxHeight, card.offsetHeight);
+  });
+
+  cards.forEach(card => {
+    card.style.height = `${maxHeight}px`;
+  });
+}
+
+    if (value) {
+      window.location.href = value; // Redirect to the selected page
+    }
   </script>
 </body>
 

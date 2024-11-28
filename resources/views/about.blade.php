@@ -14,13 +14,8 @@
   <!-- Navbar -->
   @include('navbar')
 
-
-  
   <!-- Mobile Menu -->
-  
-  
-
-   
+  @include('mobileMenue')
 
   <!-- Main Content -->
   <main class="px-6 sm:px-12 py-12">
@@ -65,19 +60,19 @@
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
         <!-- Team Member -->
         <div class="text-center bg-white text-gray-800 p-6 rounded-lg shadow-md">
-          <img src="./assets/David.jpg" alt="Team Member" class="w-32  h-24 mx-auto rounded-full" />
+          <img src="images/David.jpg" alt="Team Member" class="w-32  h-24 mx-auto rounded-full" />
           <h3 class="mt-4 font-semibold font-poppins">John Doe</h3>
           <p class="text-gray-600 font-poppins">Project Manager</p>
         </div>
         <!-- Team Member -->
         <div class="text-center bg-white text-gray-800 p-6 rounded-lg shadow-md">
-          <img src="./assets/Joe.jpg" alt="Team Member" class="w-32 h-24 mx-auto rounded-full" />
+          <img src="images/Joe.jpg" alt="Team Member" class="w-32 h-24 mx-auto rounded-full" />
           <h3 class="mt-4 font-semibold font-poppins">Jane Smith</h3>
           <p class="text-gray-600 font-poppins">Lead Developer</p>
         </div>
         <!-- Team Member -->
         <div class="text-center bg-white text-gray-800 p-6 rounded-lg shadow-md">
-          <img src="./assets/Jane.jpg" alt="Team Member" class="w-32  h-24 mx-auto rounded-full" />
+          <img src="images/Jane.jpg" alt="Team Member" class="w-32  h-24 mx-auto rounded-full" />
           <h3 class="mt-4 font-semibold font-poppins">Emily Davis</h3>
           <p class="text-gray-600 font-poppins">UI/UX Designer</p>
         </div>
@@ -90,18 +85,23 @@
   </footer>
 
   <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
+     document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById("logout-button");
+        const loginButton = document.getElementById("login-button");
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token from localStorage
+
+        if (!accessToken) {
+            logoutButton.style.display = "none";
+            loginButton.style.display = "block";
+        }
+        else {
+            logoutButton.style.display = "block";
+            loginButton.style.display = "none";
+        }
+
+    })
   
-    menuToggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-    });
-  
-    function navigateToPage(value) {
-      if (value) {
-        window.location.href = value;
-      }
-    }
   </script>
 </body>
 

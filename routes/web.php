@@ -59,6 +59,8 @@ Route::get('/service', function () {
     return view('service');
 });
 
+Route::get('/requests', [AdminController::class, 'requestsShow'])->name('requestsShow');
+
 // Route::get('/create', [AdminController::class, 'createProject'])->name('createProject');
 // web.php
 Route::group(['middleware' => ['role:admin']], function () {

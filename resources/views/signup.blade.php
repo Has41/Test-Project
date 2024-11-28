@@ -77,7 +77,7 @@
 
     <!-- Right Section (Image) -->
     <div class="aspect-[3/4] md:aspect-[3/1] w-full md:w-1/2 flex items-center justify-center">
-      <img src="path-to-your-image/Signup.png" alt="Signup Image" class="object-cover w-full h-full" />
+      <img src="images/Signup.png" alt="Signup Image" class="object-cover w-full h-full" />
     </div>
   </main>
 

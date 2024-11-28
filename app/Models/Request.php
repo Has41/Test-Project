@@ -15,4 +15,19 @@ class Request extends Model
     'requestBy_id', // Correct field
     'assigned_to',
     ];
+    // RequestModel.php
+
+// RequestModel.php
+
+public function project()
+{
+    return $this->belongsTo(Project::class, 'project_id'); // Adjust the foreign key if it's different
+}
+
+public function user()
+{
+    return $this->belongsTo(User::class, 'requestBy_id');
+}
+
+
 }

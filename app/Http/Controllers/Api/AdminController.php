@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Project;
-use App\Models\Request as RequestModel; 
+use App\Models\Request as RequestModel;
 use Validator;
 use Auth;
 
@@ -28,24 +28,28 @@ class AdminController extends Controller
     public function store(Request $request)
     {
 
-       
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'description' => 'required',
-            'budget' => 'required',
-            'assigned_to' => 'required',
-            'deadline' => 'required|date|after_or_equal:today',
-        ]
-        , [
-            'name.required' => 'Project name is required.',
-            'description.required' => 'Project description is required.',
-            'budget.required' => 'Budget is required and must be a number.',
-            'assigned_to.exists' => 'Assigned team must exist.',
-            'deadline.after_or_equal' => 'Deadline must be after or equal to today.',
-            'deadline.required' => 'Deadline is required.',
-        ]);
-        
-        
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'budget' => 'required',
+                'assigned_to' => 'required',
+                'deadline' => 'required|date|after_or_equal:today',
+            ]
+            ,
+            [
+                'name.required' => 'Project name is required.',
+                'description.required' => 'Project description is required.',
+                'budget.required' => 'Budget is required and must be a number.',
+                'assigned_to.exists' => 'Assigned team must exist.',
+                'deadline.after_or_equal' => 'Deadline must be after or equal to today.',
+                'deadline.required' => 'Deadline is required.',
+            ]
+        );
+
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -53,10 +57,10 @@ class AdminController extends Controller
                 'errors' => $validator->errors()
             ], 401);
         }
-        $request['status']='pending';
-       
+        $request['status'] = 'pending';
+
         $input = $request->all();
-        
+
         $projects = Project::create($input);
 
         return response()->json([
@@ -76,13 +80,14 @@ class AdminController extends Controller
         ]);
     }
 
-    public function teams() {
+    public function teams()
+    {
         $teams = Project::leftJoin('users', 'projects.assigned_to', '=', 'users.id')
-                        ->select('projects.*', 'users.username')
-                        ->get();
+            ->select('projects.*', 'users.username')
+            ->get();
         return view('/team', compact('teams'));
     }
-     public function updateStatus(Request $request)
+    public function updateStatus(Request $request)
     {
         // Validate the incoming request
         $request->validate([
@@ -135,7 +140,7 @@ class AdminController extends Controller
             'project_id.required' => 'Project ID is required.',
             'givenBy_id.required' => 'User ID is required.',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -143,7 +148,7 @@ class AdminController extends Controller
                 'errors' => $validator->errors()
             ], 401);
         }
-    
+
         // Prepare the data for insertion
         $data = [
             'project_id' => $request->project_id,
@@ -151,18 +156,58 @@ class AdminController extends Controller
             'requestBy_id' => Auth::id(), // Corrected to match the column name in the database
             'assigned_to' => $request->givenBy_id, // Assign givenBy_id to assigned_to if needed
         ];
-    
+
         // Create the request record
         $newRequest = RequestModel::create($data);
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Request sent successfully',
             'data' => $newRequest,
         ]);
     }
-    
 
+   public function requestsShow()
+   {
+       $requests = RequestModel::leftJoin('projects', 'requests.project_id', '=', 'projects.id')
+           ->leftJoin('users', 'requests.requestBy_id', '=', 'users.id')
+           ->select('requests.*', 'projects.name', 'projects.deadline', 'users.username')
+           ->get();
+       return view('/requests', compact('requests'));
+   }
+
+    // public function requestsShow()
+    // {
+    //     $requests = RequestModel::with(['user', 'project']) // Eager load user and project relationships
+    //         ->get();
+        
+    //     return view('/requests', compact('requests'));
+    // }
+
+    public function accept(Request $request)
+    {
+        // Validate incoming data
+        $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'request_id' => 'required|exists:requests,id',
+            'requestBy_id' => 'required|exists:users,id',
+        ]);
+    
+        $newProject = Project::find($request->project_id);
+        $newProject->assigned_to = $request->requestBy_id;
+        $newProject->status = 'pending';
+        $newProject->save();
+    
+        $requestModel = RequestModel::find($request->request_id);
+        $requestModel->delete();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Request accepted successfully',
+            'data' => $newProject,
+            'redirect_url' => url('/team'),
+        ]);
+    }
     
 
 
