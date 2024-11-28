@@ -174,16 +174,20 @@
     @else
         @foreach ($teams as $member)
         <div class="card">
-        <div class="card-avatar">DP</div>
-        <h2 class="card-title">{{ $member->username }}</h2>
+        <div class="card-avatar">{{ $member->username[0] }}</div>
+        <h2 class="card-title">{{ $member->name }}</h2>
         <div class="card-info">
+        <div class="info-item">
+          <b>Team</b>
+          <span>{{ $member->username }} |</span>
+          </div>
           <div class="info-item">
-          <b>Project Status</b>
-          <span>{{ $member->status }}</span>
+          <b>Status</b>
+          <span>{{ $member->status }} |</span>
           </div>
           <div class="info-item">
           <b>Deadline</b>
-          <span class="deadline">{{ $member->deadline }}</span>
+          <span class="deadline">{{ $member->deadline }}</span> 
           </div>
           <div class="info-item">
           <b>Pending Days</b>
@@ -248,7 +252,7 @@
           if (!isNaN(deadline.getTime())) {
             const diffTime = deadline - today;
             const pendingDays = diffTime > 0 ? Math.ceil(diffTime / (1000 * 60 * 60 * 24)) : 0;
-            const pendingText = pendingDays > 0 ? `${pendingDays} days remaining` : `Deadline passed`;
+            const pendingText = pendingDays > 0 ? `| ${pendingDays} days pending ` : `Deadline passed`;
 
             pendingDaysElement.textContent = pendingText;
             console.log(`Updated pending-days: ${pendingText}`);

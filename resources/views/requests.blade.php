@@ -109,7 +109,10 @@ document.querySelectorAll('form[id^="accept-form-"]').forEach((form) => {
         }
     });
 });
-
+if (value) {
+      window.location.href = value; // Redirect to the selected page
+    }
+  }
 </script>
 
 </body>

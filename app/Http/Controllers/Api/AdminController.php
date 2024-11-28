@@ -171,9 +171,17 @@ class AdminController extends Controller
    {
        $requests = RequestModel::leftJoin('projects', 'requests.project_id', '=', 'projects.id')
            ->leftJoin('users', 'requests.requestBy_id', '=', 'users.id')
-           ->select('requests.*', 'projects.name', 'projects.deadline', 'users.username')
+           ->select('requests.*', 'projects.name', 'projects.deadline','projects.status','projects.budget', 'users.username')
            ->get();
        return view('/requests', compact('requests'));
+   }
+   public function moduleShow()
+   {
+       $requests = RequestModel::leftJoin('projects', 'requests.project_id', '=', 'projects.id')
+           ->leftJoin('users', 'requests.requestBy_id', '=', 'users.id')
+           ->select('requests.*', 'projects.name', 'projects.deadline','projects.status','projects.budget', 'users.username')
+           ->get();
+       return view('/module', compact('requests'));
    }
 
     // public function requestsShow()

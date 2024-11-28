@@ -43,9 +43,7 @@ Route::get('/team',[
     AdminController::class, 'teams'] 
 )->name('team');
 
-Route::get('/module', function () {
-    return view('module');
-})->name('module');
+Route::get('/module', [AdminController::class, 'moduleShow'])->name('requestsShow');
 
 Route::get('/contact', function () {
     return view('contact');
