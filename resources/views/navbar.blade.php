@@ -39,7 +39,7 @@
                             <option value="/create">Create Project</option>
                         @endif
                         <option value="/module">Modules</option>
-                        <option value="/project">Projects</option>
+                        <option value="/requests">Request</option>
                     </select>
                 </li>
 
